@@ -1,0 +1,30 @@
+name: 'Redis Setup Action'
+description: 'Github action for redis setup'
+author: 'chenjunqing'
+branding:
+  icon: 'database'
+  color: 'purple'
+inputs:
+  containerName:
+    description: 'Name of the container'
+    required: false
+    default: 'redis'
+  hostPort:
+    description: 'The port of host'
+    required: false
+    default: '6379'
+  containerPort:
+    description: 'The port of container'
+    required: false
+    default: '6379'
+  version:
+    description: 'Version of redis to use'
+    required: false
+    default: 'latest'
+  password:
+    description: 'Redis server password'
+    required: false
+    default: ''
+runs:
+  using: 'docker'
+  image: 'Dockerfile'

@@ -1,0 +1,42 @@
+name: test
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Setup redis
+        uses: chenjuneking/redis-setup-action@master
+        id: redis
+        with:
+          version: 6
+          hostPort: 5034
+          containerPort: 6379
+          password: ${{ secrets.REDIS_PASSWORD }}
+
+      - name: Post redis setup
+        run: |
+          echo "Container: ${{ steps.redis.outputs.containerName }} has been setup"
+
+      - name: Run test cases
+        run: |
+          npm install
+          REDIS_PORT=5034 REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }} npm test
+        env:
+          CI: true
