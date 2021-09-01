@@ -22,7 +22,7 @@ jobs:
           node-version: '14'
 
       - name: Setup redis
-        uses: chenjuneking/redis-setup-action@master
+        uses: chenjuneking/redis-setup-action@main
         id: redis
         with:
           version: 6
